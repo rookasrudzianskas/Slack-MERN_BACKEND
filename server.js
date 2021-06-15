@@ -13,10 +13,14 @@ app.use(express.json());
 // db config
 const mongoURI = 'mongodb+srv://admin:TscmXQF2LuppZh4X@cluster0.lcjud.mongodb.net/backend-slack?retryWrites=true&w=majority'
 
-mongoose.connect({
+mongoose.connect(mongoURI, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
+})
+
+mongoose.connection.once('open', () => {
+    console.log("DB CONNECTION");
 })
 
 // api routes
