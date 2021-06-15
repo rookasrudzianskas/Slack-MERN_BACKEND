@@ -8,6 +8,17 @@ import mongoData from "./mondoData.js";
 // app config
 const app = express();
 const port = process.env.PORT || 7000;
+
+const pusher = new Pusher({
+    appId: "1219798",
+    key: "7fee001524c20788c95d",
+    secret: "d94745559808ea82203f",
+    cluster: "eu",
+    useTLS: true
+});
+
+
+
 // middlewares
 
 app.use(cors());
@@ -23,6 +34,9 @@ mongoose.connect(mongoURI, {
 
 mongoose.connection.once('open', () => {
     console.log("DB CONNECTION");
+
+    // this watches for the changes here
+    const changeStream = mongoose.connection.collection('conversations').watch();
 })
 
 // api routes
