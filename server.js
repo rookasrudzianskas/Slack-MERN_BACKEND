@@ -40,11 +40,15 @@ mongoose.connection.once('open', () => {
 
     changeStream.on( (change) => {
         if(change.operationType === 'insert') {
-            pusher.trigger("my-channels", "newChannel", {
-                change: change
+            pusher.trigger("channels", "newChannel", {
+                'change': change
             });
         } else if (change.operationType === 'update') {
-
+            pusher.trigger("conversation", "newMessage", {
+                'change': change
+            });
+        } else {
+            console.log('Error triggering Pusher');
         }
     })
 })
