@@ -2,6 +2,8 @@ import express from "express";
 import Pusher from "pusher";
 import cors from "cors";
 import mongoose from "mongoose";
+import "./mondoData.js";
+
 
 // app config
 const app = express();
