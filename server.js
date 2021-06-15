@@ -78,6 +78,19 @@ app.get('/get/channelList', (req, res) => {
         res.status(200).send(channels);
     }})
 })
+
+
+app.get('/get/conversations', (req, res) => {
+    const id = req.query.id
+
+    mongoData.find({_id: id}, (err, data) => {
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(data);
+        }
+    })
+})
 // listen to something
 
 app.listen(port, () => console.log(`This runs on ${port}`));
