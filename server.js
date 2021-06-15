@@ -37,6 +37,16 @@ mongoose.connection.once('open', () => {
 
     // this watches for the changes here
     const changeStream = mongoose.connection.collection('conversations').watch();
+
+    changeStream.on( (change) => {
+        if(change.operationType === 'insert') {
+            pusher.trigger("my-channels", "newChannel", {
+                change: change
+            });
+        } else if (change.operationType === 'update') {
+
+        }
+    })
 })
 
 // api routes
