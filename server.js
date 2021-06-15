@@ -2,7 +2,7 @@ import express from "express";
 import Pusher from "pusher";
 import cors from "cors";
 import mongoose from "mongoose";
-import "./mondoData.js";
+import mongoData from "./mondoData.js";
 
 
 // app config
@@ -28,6 +28,36 @@ mongoose.connection.once('open', () => {
 // api routes
 app.get('/', (req, res) => res.status(200).send("Backend is working on 🚀"));
 
+
+app.post('/new/channel', (req, res) => {
+    const dbData = req.body;
+
+    mongoData.create(dbData, (err, data) => {
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            res.status(201).send(data);
+        }
+    })
+})
+
+app.post('/new/message', (req, res) => {
+    const id = req.query.id;
+    const newMessage = req.body;
+
+    mongoData.update(
+        {_id: id},
+        {$push: {conversation: newMessage }},
+
+        (err, data) => {
+            if(err) {
+                res.status(500).send(err);
+            } else {
+                res.status(201).send(data);
+            }
+        }
+    )
+})
 // listen to something
 
 app.listen(port, () => console.log(`This runs on ${port}`));
