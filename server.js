@@ -80,7 +80,7 @@ app.get('/get/channelList', (req, res) => {
 })
 
 
-app.get('/get/conversations', (req, res) => {
+app.get('/get/conversation', (req, res) => {
     const id = req.query.id
 
     mongoData.find({_id: id}, (err, data) => {
